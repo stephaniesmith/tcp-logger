@@ -26,10 +26,10 @@ describe('E2E', () => {
         client.destroy();
     });
 
-    it('test someting...', done => {
+    it.only('test someting...', done => {
         const message = 'I said some stuff!';
         const date = new Date();
-        const loggedMessage = `${date} ** ${message} sent by the client`;
+        const loggedMessage = `\n ${date} ** ${message} sent by the client`;
         client.on('data', received => {
             assert.equal(received, loggedMessage);
             done();
