@@ -11,15 +11,25 @@ describe('Logger', () => {
         const log = logger.log(message);
 
         const date = new Date();
-        const expected = `${date} ** ${message} sent by the client \n`;
+        const expected = `\n${date} ** ${message} sent by the client`;
         assert.equal(expected, log);
     });
 
     it('check the file path', () => {
+        const message = 'Thit is testing the path!';
+        logger.log(message);
+
         const loggedFile = fs.readFileSync(`./lib/${logger.logfile}`);
 
         const expected = fs.readFileSync('./lib/log.txt');
         assert.deepEqual(expected, loggedFile);
     });
 
+    it('check the last line of content', () => {
+        const message = 'Last Line of content';
+        const log = logger.log(message).split('\n');
+
+        const expected = fs.readFileSync('./lib/log.txt', 'utf8').split('\n');
+        assert.deepEqual(expected[expected.length - 1], log[1]);
+    });
 });
