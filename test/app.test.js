@@ -32,8 +32,8 @@ describe('E2E', () => {
         client2.destroy();
     });
 
-    it.only('test someting...', done => {
-        const message = 'I said some stuff!';
+    it('This is ckecking the server connection', done => {
+        const message = 'This is checking the server';
         const date = new Date();
         const loggedMessage = `\n${date} ** ${message} sent by the client`;
         client2.on('data', received => {
