@@ -1,14 +1,11 @@
-const app = require('../lib/app');
+// const app = require('../lib/app');
+const server = require('../server');
 const net = require('net');
 const assert = require('assert');
 
 describe('E2E', () => {
 
-    const PORT = 15677;
-
-    beforeEach(done => {
-        app.listen(PORT, done);
-    });
+    const PORT = 15678;
 
     let client = null;
     beforeEach(done => {
@@ -19,7 +16,7 @@ describe('E2E', () => {
     });
 
     afterEach(() => {
-        app.close();
+        server.close();
     });
 
     afterEach(() => {
