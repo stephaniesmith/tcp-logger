@@ -7,10 +7,18 @@ describe('E2E', () => {
 
     const PORT = 15678;
 
-    let client = null;
+    let client1 = null;
     beforeEach(done => {
-        client = net.connect(PORT, () => {
-            client.setEncoding('utf8');
+        client1 = net.connect(PORT, () => {
+            client1.setEncoding('utf8');
+            done();
+        });
+    });
+
+    let client2 = null;
+    beforeEach(done => {
+        client2 = net.connect(PORT, () => {
+            client2.setEncoding('utf8');
             done();
         });
     });
@@ -20,17 +28,18 @@ describe('E2E', () => {
     });
 
     afterEach(() => {
-        client.destroy();
+        client1.destroy();
+        client2.destroy();
     });
 
     it.only('test someting...', done => {
         const message = 'I said some stuff!';
         const date = new Date();
-        const loggedMessage = `\n ${date} ** ${message} sent by the client`;
-        client.on('data', received => {
+        const loggedMessage = `\n${date} ** ${message} sent by the client`;
+        client2.on('data', received => {
             assert.equal(received, loggedMessage);
             done();
         });
-        client.write(message);
+        client1.write(message);
     });
 });
