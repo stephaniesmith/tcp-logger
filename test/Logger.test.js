@@ -1,6 +1,6 @@
 const assert = require('assert');
 const fs = require('fs');
-const Logger = require('../lib/Logger');
+const Logger = require('./lib/Logger');
 
 describe('Logger', () => {    
 
