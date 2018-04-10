@@ -1,11 +1,9 @@
 TPC logger
 ===
 
-## API
+## Description
 
-### `function()`
-
-Description
+This app appends the logs the messages of the client and uses that log to create the server.
 
 ## Author
 
