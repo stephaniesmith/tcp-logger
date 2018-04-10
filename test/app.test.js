@@ -27,10 +27,11 @@ describe('E2E', () => {
     });
 
     it('test someting...', done => {
-        const message = 'echo test';
-
+        const message = 'I said some stuff!';
+        const date = new Date();
+        const loggedMessage = `${date} ** ${message} sent by the client`;
         client.on('data', received => {
-            assert.equal(received, message);
+            assert.equal(received, loggedMessage);
             done();
         });
         client.write(message);
