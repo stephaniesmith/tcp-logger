@@ -1,38 +1,45 @@
-const app = require('../lib/app');
+// const app = require('../lib/app');
+const server = require('../server');
 const net = require('net');
 const assert = require('assert');
 
 describe('E2E', () => {
 
-    const PORT = 15677;
+    const PORT = 15678;
 
+    let client1 = null;
     beforeEach(done => {
-        app.listen(PORT, done);
+        client1 = net.connect(PORT, () => {
+            client1.setEncoding('utf8');
+            done();
+        });
     });
 
-    let client = null;
+    let client2 = null;
     beforeEach(done => {
-        client = net.connect(PORT, () => {
-            client.setEncoding('utf8');
+        client2 = net.connect(PORT, () => {
+            client2.setEncoding('utf8');
             done();
         });
     });
 
     afterEach(() => {
-        app.close();
+        server.close();
     });
 
     afterEach(() => {
-        client.destroy();
+        client1.destroy();
+        client2.destroy();
     });
 
-    it('test someting...', done => {
-        const message = 'echo test';
-
-        client.on('data', received => {
-            assert.equal(received, message);
+    it('This is ckecking the server connection', done => {
+        const message = 'This is checking the server';
+        const date = new Date();
+        const loggedMessage = `\n${date} ** ${message} sent by the client`;
+        client2.on('data', received => {
+            assert.equal(received, loggedMessage);
             done();
         });
-        client.write(message);
+        client1.write(message);
     });
 });
